@@ -54,42 +54,19 @@ export default function CategoryPage({
   // --------- MOCK POSTS (poți modifica/înlocui ulterior) ---------
   const mock: Record<string, Post[]> = {
     invatare: [
-      { id: "i1", title: "Cum să citești Biblia zilnic", date: "2025-01-15", image: "/caleata.png", excerpt: "Sfaturi practice pentru obicei constant de studiu biblic.", content: "Începe cu un plan realist (10-15 minute), alege o traducere clară și notează ce înțelegi. Roagă-te la început și la final." },
-      { id: "i2", title: "Resurse de învățare", date: "2025-02-02", image: "/caleata.png", excerpt: "Cărți, podcast-uri și aplicații utile.", content: "Încearcă comentarii biblice de bază, un podcast săptămânal și o aplicație cu planuri zilnice. Discută cu un mentor.", youtubeId: "dQw4w9WgXcQ" },
-      { id: "i3", title: "Importanța mentoratului", date: "2025-02-20", excerpt: "De ce avem nevoie de modele spirituale.", content: "Un mentor te ajută să rămâi ancorat în Cuvânt și în practică. Caută oameni maturi în credință, stabili și smeriți." },
-      { id: "i4", title: "Planuri pe 90 de zile", date: "2025-03-03", excerpt: "Disciplină pentru inimă.", content: "Un plan scurt și intens poate aprinde pasiunea pentru Scriptură și rugăciune." },
-      { id: "i5", title: "Note & Jurnal spiritual", date: "2025-03-10", excerpt: "Cum să-ți structurezi notițele.", content: "Format simplu: Text – Observații – Aplicare – Rugăciune." },
-      { id: "i6", title: "Studiu în grup mic", date: "2025-03-18", excerpt: "De ce comunitatea ajută enorm.", content: "Învățăm, ne încurajăm, dăm socoteală unii altora." },
+      { id: "i1", title: "Cum să citești Biblia zilnic", date: "2025-01-15", image: "/caleata.png", excerpt: "Sfaturi practice pentru obicei constant de studiu biblic.", content: "Începe cu un plan realist (10-15 minute), alege o traducere clară și notează ce înțelegi. Roagă-te la început și la final." }
     ],
     rugaciune: [
-      { id: "r1", title: "Rugăciunea dimineața", date: "2025-01-05", excerpt: "Începe ziua cu pace.", content: "Mulțumire, mărturisire, cerere, încredere." },
-      { id: "r2", title: "Pentru cei bolnavi", date: "2025-02-14", excerpt: "Adu-i pe nume înaintea Domnului.", content: "Crede că El poate vindeca. Împletește rugăciunea cu compasiunea.", youtubeId: "5NV6Rdv1a3I" },
-      { id: "r3", title: "Rugăciune în post", date: "2025-02-28", excerpt: "Postul aduce claritate.", content: "Postul ne smerește pe noi. Stabilește scopul și rămâi în Scriptură." },
-      { id: "r4", title: "Pentru conducători", date: "2025-03-06", excerpt: "Îndemnul Scripturii.", content: "Să ne rugăm pentru pace, înțelepciune și dreptate." },
-      { id: "r5", title: "Împreună la rugăciune", date: "2025-03-16", excerpt: "Putere în unitate.", content: "Unde doi sau trei se adună în Numele Lui..." },
-      { id: "r6", title: "Rugăciune de mijlocire", date: "2025-03-22", excerpt: "Stai în spărtură.", content: "Amintește-ți promisiunile Lui și cheamă Numele Domnului." },
+      { id: "r1", title: "Rugăciunea dimineața", date: "2025-01-05", excerpt: "Începe ziua cu pace.", content: "Mulțumire, mărturisire, cerere, încredere." }
     ],
     cantare: [
-      { id: "c1", title: "O cântare nouă", date: "2025-01-12", excerpt: "Psalmii ne inspiră.", content: "Concentrează-te pe adevăruri biblice clare." },
-      { id: "c2", title: "Top 10 cântări", date: "2025-02-10", excerpt: "Cântări care zidesc.", content: "Alege cântări teocentrice potrivite congregației." },
-      { id: "c3", title: "Ton & Cheie", date: "2025-03-11", excerpt: "Ajută comunitatea să cânte.", content: "Ajustează tonalitatea pe registrul comun." },
-      { id: "c4", title: "Închinare cu echipa", date: "2025-03-19", excerpt: "Unitate și pregătire.", content: "Rugăciune, selecție atentă, repetiții." },
+      { id: "c1", title: "O cântare nouă", date: "2025-01-12", excerpt: "Psalmii ne inspiră.", content: "Concentrează-te pe adevăruri biblice clare." }
     ],
     predicare: [
-      { id: "p1", title: "Predică simplu și clar", date: "2025-01-22", excerpt: "Mesaj accesibil.", content: "Idee principală, texte, aplicații practice." },
-      { id: "p2", title: "Expozitiv", date: "2025-02-08", excerpt: "De ce e vital.", content: "Lasă textul să dicteze mesajul.", youtubeId: "3JZ_D3ELwOQ" },
-      { id: "p3", title: "Curaj în vestire", date: "2025-03-01", excerpt: "Învățături din Fapte.", content: "Curajul vine din Duhul, nu din temperament." },
-      { id: "p4", title: "Schița de predică", date: "2025-03-05", excerpt: "Pași practici.", content: "Text – Observație – Interpretare – Aplicație." },
-      { id: "p5", title: "Exemple relevante", date: "2025-03-07", excerpt: "Fără „povești”.", content: "Leagă exemplele direct de text." },
-      { id: "p6", title: "Apel la răspuns", date: "2025-03-12", excerpt: "Clar și cald.", content: "Cheamă oamenii la credință, nu la performanță." },
-      { id: "p7", title: "Predică în rugăciune", date: "2025-03-20", excerpt: "Dependență de Domnul.", content: "Înainte, în timpul și după mesaj." },
+      { id: "p1", title: "Predică simplu și clar", date: "2025-01-22", excerpt: "Mesaj accesibil.", content: "Idee principală, texte, aplicații practice." }
     ],
     marturie: [
-      { id: "m1", title: "Mărturia personală", date: "2025-01-30", excerpt: "Spune ce a făcut Domnul.", content: "Fii onest, scurt, centrat pe Hristos." },
-      { id: "m2", title: "Transformare", date: "2025-02-18", excerpt: "Har real.", content: "Protejează detalii sensibile." },
-      { id: "m3", title: "Curajul de a vorbi", date: "2025-02-25", excerpt: "Iubește oamenii.", content: "Spune-ți povestea cu blândețe și respect.", youtubeId: "Zi_XLOBDo_Y" },
-      { id: "m4", title: "Ascultarea activă", date: "2025-03-09", excerpt: "Înainte să vorbești.", content: "Ascultarea deschide inimi." },
-      { id: "m5", title: "Mărturie în familie", date: "2025-03-13", excerpt: "Cel mai greu loc.", content: "Trăiește ce spui, pe termen lung." },
+      { id: "m1", title: "Mărturia personală", date: "2025-01-30", excerpt: "Spune ce a făcut Domnul.", content: "Fii onest, scurt, centrat pe Hristos." }
     ],
   };
 
