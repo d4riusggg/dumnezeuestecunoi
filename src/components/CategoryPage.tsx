@@ -453,10 +453,35 @@ export default function CategoryPage({
             </Box>
           )}
 
-          {/* ✅ Aici e textul complet (full) */}
-          <Typography sx={{ whiteSpace: "pre-line", lineHeight: 1.8, mb: selected?.youtubeId ? 2 : 0 }}>
-            {selected?.content}
-          </Typography>
+          {/* ✅ Aici e textul complet (full) STILIZAT */}
+          <Box sx={{
+            px: { xs: 1, md: 4 }, // Margini laterale mai mari pentru ecrane mari
+            py: 2,               // Spațiere sus/jos
+          }}>
+            <Typography 
+              sx={{ 
+                whiteSpace: "pre-line", 
+                lineHeight: 1.9,         // Rânduri mai aerisite
+                fontSize: { xs: "1rem", md: "1.1rem" }, // Font ușor mai mare pentru citire ușoară
+                color: "rgba(0, 0, 0, 0.85)", // Nu negru pur, ci un gri foarte închis (obosește mai puțin ochii)
+                fontFamily: "'Georgia', serif", // Font clasic, excelent pentru blocuri mari de text literar/spiritual
+                textAlign: "justify", // Aliniere stânga-dreapta pentru aspect de carte
+                mb: selected?.youtubeId ? 4 : 2,
+                
+                // Stilizare pentru un eventual prim paragraf sau citat
+                "&::first-letter": {
+                  fontSize: "2.5rem",
+                  fontWeight: "bold",
+                  color: accent, // Folosește culoarea specifică secțiunii (ex: roșu la Mărturie)
+                  float: "left",
+                  mr: 1,
+                  lineHeight: 1,
+                }
+              }}
+            >
+              {selected?.content}
+            </Typography>
+          </Box>
 
           {selected?.youtubeId && (
             <Box
