@@ -29,7 +29,7 @@ export default function App() {
         <Route
           path="/*"
           element={
-            <Box sx={{ minHeight: "100vh", display: "flex", flexDirection: "column", bgcolor: "#fafafa" }}>
+            <Box sx={{ minHeight: "100vh", display: "flex", flexDirection: "column", background: "linear-gradient(180deg, #dbeafe 0%, #ffffff 40%, #fef8e6 100%)" }}>
               <NavBar />
               <Box component="main" sx={{ flex: 1, display: "flex", flexDirection: "column" }}>
                 <Routes>
