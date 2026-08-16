@@ -20,6 +20,7 @@ import AdminPanel from "./pages/admin/AdminPanel";
 import PostsManager from "./pages/admin/PostsManager";
 import NeedsManager from "./pages/admin/NeedsManager";
 import NewsletterManager from "./pages/admin/NewsletterManager";
+import AdminStatistics from "./pages/admin/AdminStatistics";
 
 export default function App() {
   return (
@@ -55,8 +56,9 @@ export default function App() {
           <Route path="home" element={<AdminHome />} />
           <Route path="administrare" element={<AdminPanel />} />
           <Route path="administrare/postari" element={<PostsManager />} />
-          <Route path="administrare/nevoi" element={<NeedsManager />} />
-          <Route path="administrare/newsletter" element={<NewsletterManager />} />
+ <Route path="administrare/nevoi" element={<NeedsManager />} />
+<Route path="administrare/newsletter" element={<NewsletterManager />} />
+<Route path="statistici" element={<AdminStatistics />} />
         </Route>
       </Routes>
     </BrowserRouter>

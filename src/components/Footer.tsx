@@ -1,14 +1,23 @@
 import * as React from "react";
+
 import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
-import Stack from "@mui/material/Stack";
+import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
+import Stack from "@mui/material/Stack";
+import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
+import Alert from "@mui/material/Alert";
+
 import FacebookIcon from "@mui/icons-material/Facebook";
 import YouTubeIcon from "@mui/icons-material/YouTube";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import EmailIcon from "@mui/icons-material/Email";
 import SvgIcon from "@mui/material/SvgIcon";
+
+// ⚠️ Link-ul către worker-ul tău de pe Cloudflare
+const WORKER_URL = "https://nameless-bonus-c608.d4riusfncollab.workers.dev";
 
 function TikTokIcon(props: any) {
   return (
@@ -21,10 +30,65 @@ function TikTokIcon(props: any) {
   );
 }
 
-
-
-
 export default function Footer() {
+  const [nume, setNume] = React.useState("");
+  const [email, setEmail] = React.useState("");
+  const [message, setMessage] = React.useState("");
+  const [messageType, setMessageType] = React.useState<"success" | "error" | "info">("success");
+  const [saving, setSaving] = React.useState(false);
+
+  const handleNewsletterSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+
+    const cleanNume = nume.trim();
+    const cleanEmail = email.trim().toLowerCase();
+
+    if (!cleanNume) {
+      setMessageType("error");
+      setMessage("Introdu numele tău.");
+      return;
+    }
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(cleanEmail)) {
+      setMessageType("error");
+      setMessage("Introdu o adresă de email validă.");
+      return;
+    }
+
+    setSaving(true);
+    setMessage("");
+
+    try {
+      const res = await fetch(`${WORKER_URL}/newsletter`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ nume: cleanNume, email: cleanEmail }),
+      });
+
+      if (!res.ok) {
+        throw new Error("Nu am putut salva emailul. Încearcă din nou.");
+      }
+
+      const data = await res.json();
+
+      if (data.alreadySubscribed) {
+        setMessageType("info");
+        setMessage("Această adresă este deja abonată la newsletter.");
+        return;
+      }
+
+      setNume("");
+      setEmail("");
+      setMessageType("success");
+      setMessage("Te-ai abonat cu succes la newsletter. Mulțumim!");
+    } catch (error: any) {
+      setMessageType("error");
+      setMessage(error.message || "Nu am putut salva emailul. Încearcă din nou.");
+    } finally {
+      setSaving(false);
+    }
+  };
+
   return (
     <Box
       component="footer"
@@ -37,7 +101,7 @@ export default function Footer() {
       }}
     >
       <Container maxWidth="lg">
-        <Stack spacing={2} alignItems="center" textAlign="center">
+        <Stack spacing={2.5} alignItems="center" textAlign="center">
           <Typography
             variant="subtitle1"
             sx={{
@@ -49,7 +113,101 @@ export default function Footer() {
             Dumnezeu este cu noi — Matei 1:23
           </Typography>
 
-          {/* Social icons */}
+          <Box
+            component="form"
+            onSubmit={handleNewsletterSubmit}
+            sx={{
+              width: "100%",
+              maxWidth: 720,
+              textAlign: "left",
+              bgcolor: "#fdfaf3",
+              color: "#1a1a1a",
+              borderRadius: 3,
+              border: "1px solid rgba(0,0,0,0.08)",
+              p: { xs: 2.5, md: 3 },
+            }}
+          >
+            <Stack direction="row" spacing={1} alignItems="center">
+              <EmailIcon sx={{ fontSize: 22 }} />
+              <Typography
+                sx={{
+                  fontWeight: 900,
+                  textTransform: "uppercase",
+                  letterSpacing: 0.4,
+                  fontFamily: '"Raleway", Helvetica, sans-serif',
+                  fontSize: { xs: 16, md: 18 },
+                }}
+              >
+                Abonează-te la newsletter
+              </Typography>
+            </Stack>
+
+            <Divider sx={{ mt: 1.5, mb: 2, borderColor: "rgba(0,0,0,0.1)" }} />
+
+            <Typography sx={{ opacity: 0.75, mb: 2, fontSize: 14.5 }}>
+              Primește noutăți, îndemnuri, rugăciuni și proiecte de slujire direct pe e-mail. Fără spam. Te poți dezabona oricând.
+            </Typography>
+
+            <Stack direction={{ xs: "column", sm: "row" }} spacing={1.5}>
+              <TextField
+                fullWidth
+                size="small"
+                type="text"
+                value={nume}
+                onChange={(event) => setNume(event.target.value)}
+                placeholder="Numele tău"
+                disabled={saving}
+                sx={{
+                  bgcolor: "white",
+                  borderRadius: 1,
+                  "& .MuiInputBase-input": { color: "#071a33" },
+                }}
+              />
+
+              <TextField
+                fullWidth
+                size="small"
+                type="email"
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+                placeholder="Adresa de e-mail"
+                disabled={saving}
+                sx={{
+                  bgcolor: "white",
+                  borderRadius: 1,
+                  "& .MuiInputBase-input": { color: "#071a33" },
+                }}
+              />
+
+              <Button
+                type="submit"
+                variant="contained"
+                disabled={saving}
+                sx={{
+                  whiteSpace: "nowrap",
+                  fontWeight: 900,
+                  textTransform: "uppercase",
+                  px: 3,
+                  bgcolor: "#0b3a6f",
+                  color: "white",
+                  "&:hover": { bgcolor: "#082c54" },
+                }}
+              >
+                {saving ? "Se salvează..." : "Abonează-mă"}
+              </Button>
+            </Stack>
+
+            <Typography sx={{ mt: 1.5, fontSize: 12.5, opacity: 0.6 }}>
+              Prin abonare ești de acord cu prelucrarea datelor conform politicii de confidențialitate.
+            </Typography>
+
+            {message && (
+              <Alert severity={messageType} sx={{ mt: 1.5, textAlign: "left" }}>
+                {message}
+              </Alert>
+            )}
+          </Box>
+
           <Stack direction="row" spacing={1.5}>
             {[
               {
@@ -65,17 +223,16 @@ export default function Footer() {
               {
                 icon: <InstagramIcon fontSize="inherit" />,
                 url: "https://www.instagram.com/dumnezeuestecunoi/",
-                hover:
-                  "linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888)",
+                hover: "linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888)",
               },
               {
                 icon: <EmailIcon fontSize="inherit" />,
                 url: "mailto:dumnezeuestecunoi@uetcompany.ro",
                 hover: "linear-gradient(45deg, #00c6ff, #0072ff)",
               },
-            ].map(({ icon, url, hover }, i) => (
+            ].map(({ icon, url, hover }, index) => (
               <IconButton
-                key={i}
+                key={index}
                 href={url}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -83,19 +240,14 @@ export default function Footer() {
                   width: 40,
                   height: 40,
                   color: "white",
-                  fontSize: 24, // dimensiune uniformă
-                  transition: "all .3s ease",
-                  "&:hover": {
-                    background: hover,
-                    color: "white",
-                  },
+                  fontSize: 24,
+                  "&:hover": { background: hover, color: "white" },
                 }}
               >
                 {icon}
               </IconButton>
             ))}
 
-            {/* TikTok */}
             <IconButton
               aria-label="TikTok"
               href="https://www.tiktok.com/@dumnezeuestecunoi25"
@@ -105,8 +257,7 @@ export default function Footer() {
                 width: 40,
                 height: 40,
                 color: "white",
-                fontSize: 24, // aceeași mărime
-                transition: "0.3s",
+                fontSize: 24,
                 "&:hover": {
                   background: "linear-gradient(45deg, #25F4EE, #FE2C55)",
                   color: "white",

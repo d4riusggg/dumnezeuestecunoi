@@ -20,7 +20,7 @@ export default function AdminPanel() {
       <Stack direction="row" spacing={2} alignItems="center" sx={{ mb: 2 }}>
         <Button
           startIcon={<ArrowBackIcon />}
-          onClick={() => navigate("/admin")}
+          onClick={() => navigate("/admin/home")}
           sx={{ color: "white", borderColor: "rgba(255,255,255,0.25)" }}
           variant="outlined"
         >
